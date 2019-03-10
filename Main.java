@@ -1,5 +1,4 @@
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,12 +13,12 @@ import javafx.stage.StageStyle;
 
 
 public class Main extends Application {
-	Image image;
+	
 	ImageView imv;
 	Label label1;
 	String file="";
 
-  GridPane gp;
+	GridPane gp;
   Scene scene;
   Task<Void> task1;
   
@@ -32,11 +31,9 @@ public class Main extends Application {
 	  gp.setHgap(5);
 	  
 	  monitor();
-	  	
-	  image = new Image(getClass().getResourceAsStream("images/1.png"));
-	  imv=new ImageView(image);
+	  
 	  label1 = new Label();
-	  label1.setGraphic(imv);
+	  label1.setGraphic(imv);	 
 	
 	  gp.add(label1, 5, 0, 1, 1);	  
 	 
@@ -47,29 +44,30 @@ public class Main extends Application {
 	  primarystage.setTitle("WINDOW");
 	  primarystage.show();
 	  new Thread(task1).start();
-	 
   }
   
-  public void monitor() {
+  public void monitor() {	  
 	  task1=new Task<Void>() {
 		  @Override
 		  protected Void call() {
 			  System.out.println("run called");
 			  int i=1;
 			  while(true) {
+				  System.out.println("inside while");
 				  try {
 					  Thread.sleep(1000);
-					  updateMessage(""+i+".png");
-					  System.out.println("i: "+i);
+					  task1.messageProperty().addListener((observable, oldValue, newValue) -> {
+						  Image image = new Image(getClass().getResourceAsStream("images/"+newValue+".png"));
+						  imv.setImage(image);
+						  label1.setGraphic(imv);
+						});
 				  }
 				  catch(Exception e) {
 					  
-				  }
-				  i++;
+				  }				  
 			  }
 		 }
 	  };
-	  imv.imageProperty().bind(task1.messageProperty());
   } 
  
   
