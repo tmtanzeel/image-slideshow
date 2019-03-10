@@ -67,6 +67,7 @@ public class Main extends Application {
 	    task1.messageProperty().addListener((observable, oldValue, newValue) -> {
 	        System.out.println(newValue);
 	        Image image = new Image(getClass().getResourceAsStream("images/" + newValue));
+		imv=new ImageView();
 	        imv.setImage(image);
 	    });
 	}
