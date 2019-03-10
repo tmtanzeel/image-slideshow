@@ -22,7 +22,6 @@ public class Main extends Application {
   GridPane gp;
   Scene scene;
   Task<Void> task1;
-  Task<Integer> task;
   
   @Override
   public void start(Stage primarystage) {
@@ -47,7 +46,7 @@ public class Main extends Application {
 	  primarystage.initStyle(StageStyle.TRANSPARENT);
 	  primarystage.setTitle("WINDOW");
 	  primarystage.show();
-	  new Thread(task).start();
+	  new Thread(task1).start();
 	 
   }
   
